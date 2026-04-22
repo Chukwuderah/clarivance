@@ -65,10 +65,10 @@ export default function SectionCTA({
     <section
       ref={ref}
       aria-labelledby={headingId}
-      className="w-full bg-navy px-6 py-20 sm:py-24"
+      className="w-full bg-navy px-6 py-16 sm:py-24"
     >
       <motion.div
-        className="mx-auto flex max-w-2xl flex-col items-center gap-6 text-center"
+        className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center"
         variants={containerVariants}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}

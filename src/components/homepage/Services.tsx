@@ -50,7 +50,7 @@ const cardVariants = {
 
 export default function Services() {
   return (
-    <section className="px-6 sm:px-20 py-16 overflow-hidden">
+    <section className="max-w-7xl mx-auto px-6 py-16 sm:py-24 overflow-hidden">
       {/* Header Animations */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -58,7 +58,7 @@ export default function Services() {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <p className="text-sm font-semibold uppercase tracking-widest text-teal-600 mb-4">
+        <p className="text-xs font-semibold uppercase tracking-widest text-teal-600 mb-4">
           Our Services
         </p>
         <h2 className="text-4xl sm:text-6xl text-left text-navy font-semibold max-w-3xl">
@@ -90,9 +90,7 @@ export default function Services() {
               <service.icon className="w-6 h-6 text-teal-600 transition-colors duration-300 group-hover:text-white" />
             </div>
 
-            <h3 className="text-xl font-bold text-navy">
-              {service.title}
-            </h3>
+            <h3 className="text-xl font-bold text-navy">{service.title}</h3>
             <p className="text-slate-600 leading-relaxed flex-1">
               {service.description}
             </p>

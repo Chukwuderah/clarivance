@@ -37,7 +37,7 @@ const tagVariants = {
 export default function OurSpecialties() {
   return (
     <section className="bg-[#E5EDF5] px-6 py-16 sm:py-24 overflow-hidden">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-12">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center gap-12">
         {/* Text Content - Slides in from the left */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
@@ -46,16 +46,16 @@ export default function OurSpecialties() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="w-full md:w-1/2 flex flex-col gap-6"
         >
-          <p className="text-sm font-bold uppercase tracking-widest text-teal-600">
+          <p className="text-xs font-bold uppercase tracking-widest text-teal-600">
             industries we specialize in
           </p>
           <h2 className="text-4xl sm:text-6xl text-left text-navy font-semibold">
             We know your sector
           </h2>
           <p className="max-w-2xl text-charcoal text-lg leading-relaxed">
-            Healthcare compliance documentation isn't generic — every sector has
-            its own regulatory language, survey expectations, and licensing
-            requirements. We've worked across all of them.
+            Healthcare compliance documentation isn&apos;t generic — every
+            sector has its own regulatory language, survey expectations, and
+            licensing requirements. We&apos;ve worked across all of them.
           </p>
         </motion.div>
 
@@ -98,7 +98,7 @@ export default function OurSpecialties() {
               className="group flex items-center gap-2 text-teal"
             >
               <p className="text-base text-teal font-semibold group-hover:underline underline-offset-4 transition-all">
-                Don't see your sector? We likely cover it.
+                Don&apos;t see your sector? We likely cover it.
               </p>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
             </Link>

@@ -52,7 +52,7 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
 export default function SocialProof() {
   return (
     <section className="bg-[#D8E2FF] px-3 sm:px-6 py-16 w-full overflow-hidden">
-      <div className="mx-auto mt-12 max-w-6xl">
+      <div className="mx-auto mt-12 max-w-7xl">
         {/* Stats Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {stats.map((stat) => (

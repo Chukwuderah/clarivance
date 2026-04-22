@@ -67,6 +67,44 @@ function useIsActive(item: NavItem): boolean {
   return pathname.startsWith(item.href) && item.href !== "/";
 }
 
+interface DropdownChildProps {
+  child: NavChild;
+  onClose: () => void;
+}
+
+function DropdownChild({ child, onClose }: DropdownChildProps) {
+  const pathname = usePathname();
+  const isActive =
+    pathname === child.href || pathname.startsWith(child.href + "/");
+
+  return (
+    <li role="none">
+      <Link
+        href={child.href}
+        role="menuitem"
+        onClick={onClose}
+        className={[
+          "group flex flex-col gap-0.5 rounded-lg px-3 py-2.5",
+          "outline-none transition-colors duration-150",
+          "focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-1",
+          isActive
+            ? "bg-teal-light text-navy"
+            : "text-charcoal hover:bg-teal-light hover:text-navy",
+        ].join(" ")}
+      >
+        <span className="text-sm font-semibold leading-tight">
+          {child.label}
+        </span>
+        {child.description && (
+          <span className="text-xs leading-snug text-slate group-hover:text-slate">
+            {child.description}
+          </span>
+        )}
+      </Link>
+    </li>
+  );
+}
+
 interface DropdownProps {
   item: NavItem & { children: NavChild[] };
   isActive: boolean;
@@ -75,7 +113,8 @@ interface DropdownProps {
 function DropdownItem({ item, isActive }: DropdownProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLLIElement>(null);
-  const pathname = usePathname();
+
+  const close = useCallback(() => setOpen(false), []);
 
   // Close on outside click
   useEffect(() => {
@@ -87,11 +126,6 @@ function DropdownItem({ item, isActive }: DropdownProps) {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
-
-  // Close on route change
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   // Close on Escape
   useEffect(() => {
@@ -110,10 +144,10 @@ function DropdownItem({ item, isActive }: DropdownProps) {
         aria-haspopup="true"
         className={[
           "flex items-center gap-1 text-xs font-semibold uppercase tracking-widest",
-          "rounded-sm px-1 py-2 outline-none transition-colors duration-150",
+          "p-1 outline-none transition-colors duration-150 cursor-pointer",
           "focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2",
           isActive
-            ? "text-navy border-b-2 border-teal"
+            ? "border-b-2 border-teal text-navy"
             : "text-slate hover:text-navy",
         ].join(" ")}
       >
@@ -136,7 +170,7 @@ function DropdownItem({ item, isActive }: DropdownProps) {
         className={[
           "absolute left-1/2 top-full z-50 mt-2 w-64",
           "-translate-x-1/2 rounded-xl border border-border bg-white",
-          "shadow-lg shadow-navy/8 transition-all duration-200 origin-top",
+          "origin-top shadow-lg shadow-navy/8 transition-all duration-200",
           open
             ? "pointer-events-auto scale-100 opacity-100"
             : "pointer-events-none scale-95 opacity-0",
@@ -149,41 +183,17 @@ function DropdownItem({ item, isActive }: DropdownProps) {
         />
 
         <ul className="p-2" role="none">
-          {item.children.map((child) => {
-            const childActive = useIsActiveHref(child.href);
-            return (
-              <li key={child.href} role="none">
-                <Link
-                  href={child.href}
-                  role="menuitem"
-                  className={[
-                    "group flex flex-col gap-0.5 rounded-lg px-3 py-2.5",
-                    "outline-none transition-colors duration-150",
-                    "focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-1",
-                    childActive
-                      ? "bg-teal-light text-navy"
-                      : "text-charcoal hover:bg-teal-light hover:text-navy",
-                  ].join(" ")}
-                >
-                  <span className="text-sm font-semibold leading-tight">
-                    {child.label}
-                  </span>
-                  {child.description && (
-                    <span className="text-xs leading-snug text-slate group-hover:text-slate">
-                      {child.description}
-                    </span>
-                  )}
-                </Link>
-              </li>
-            );
-          })}
+          {item.children.map((child) => (
+            <DropdownChild key={child.href} child={child} onClose={close} />
+          ))}
         </ul>
 
-        {/* Footer link to parent hub */}
+        {/* Footer — view all link */}
         <div className="border-t border-border-light px-4 py-2.5">
           <Link
             href={item.href}
             role="menuitem"
+            onClick={close}
             className="text-xs font-semibold uppercase tracking-wider text-teal transition-colors hover:text-navy focus-visible:outline-none focus-visible:underline"
           >
             View all {item.label.toLowerCase()} →
@@ -192,11 +202,6 @@ function DropdownItem({ item, isActive }: DropdownProps) {
       </div>
     </li>
   );
-}
-
-function useIsActiveHref(href: string): boolean {
-  const pathname = usePathname();
-  return pathname === href || pathname.startsWith(href + "/");
 }
 
 interface NavLinkProps {
@@ -210,11 +215,11 @@ function NavLink({ item, isActive }: NavLinkProps) {
       <Link
         href={item.href}
         className={[
-          "inline-block px-1 py-2 text-xs font-semibold uppercase tracking-widest",
-          "rounded-sm outline-none transition-colors duration-150",
+          "inline-block p-1 text-xs font-semibold uppercase tracking-widest",
+          "outline-none transition-colors duration-150",
           "focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2",
           isActive
-            ? "text-navy border-b-2 border-teal"
+            ? "border-b-2 border-teal text-navy"
             : "text-slate hover:text-navy",
         ].join(" ")}
         aria-current={isActive ? "page" : undefined}
@@ -222,6 +227,24 @@ function NavLink({ item, isActive }: NavLinkProps) {
         {item.label}
       </Link>
     </li>
+  );
+}
+
+function NavItemRenderer({ item }: { item: NavItem }) {
+  const isActive = useIsActive(item);
+  if (item.children) {
+    return (
+      <DropdownItem
+        item={item as NavItem & { children: NavChild[] }}
+        isActive={isActive}
+      />
+    );
+  }
+  return (
+    <NavLink
+      item={item as NavItem & { children?: never }}
+      isActive={isActive}
+    />
   );
 }
 
@@ -233,11 +256,6 @@ interface MobileDrawerProps {
 function MobileDrawer({ open, onClose }: MobileDrawerProps) {
   const pathname = usePathname();
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
-
-  // Close drawer on route change
-  useEffect(() => {
-    onClose();
-  }, [pathname, onClose]);
 
   // Prevent body scroll when drawer is open
   useEffect(() => {
@@ -255,6 +273,9 @@ function MobileDrawer({ open, onClose }: MobileDrawerProps) {
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
   }, [open, onClose]);
+
+  // FIX: removed useEffect(() => { onClose() }, [pathname]) — same rule.
+  // Drawer closes on navigation via onClick handlers on every Link below.
 
   return (
     <>
@@ -339,7 +360,6 @@ function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                       />
                     </button>
 
-                    {/* Expandable children */}
                     <ul
                       className={[
                         "overflow-hidden transition-all duration-300 ease-in-out",
@@ -355,6 +375,7 @@ function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                           <li key={child.href}>
                             <Link
                               href={child.href}
+                              onClick={onClose}
                               className={[
                                 "flex flex-col gap-0.5 rounded-lg px-6 py-2.5 transition-colors duration-150",
                                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal",
@@ -376,11 +397,10 @@ function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                           </li>
                         );
                       })}
-
-                      {/* View all link */}
                       <li>
                         <Link
                           href={item.href}
+                          onClick={onClose}
                           className="flex items-center gap-1 rounded-lg px-6 py-2 text-xs font-semibold uppercase tracking-wider text-teal transition-colors hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
                         >
                           View all {item.label.toLowerCase()} →
@@ -391,12 +411,12 @@ function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                 );
               }
 
-              // Simple link
               const isActive = pathname === item.href;
               return (
                 <li key={item.label}>
                   <Link
                     href={item.href}
+                    onClick={onClose}
                     className={[
                       "block rounded-lg px-4 py-3 text-sm font-semibold uppercase tracking-widest",
                       "transition-colors duration-150",
@@ -419,6 +439,7 @@ function MobileDrawer({ open, onClose }: MobileDrawerProps) {
         <div className="border-t border-border-light px-6 py-6">
           <Link
             href="/contact"
+            onClick={onClose}
             className={[
               "flex w-full items-center justify-center rounded-full",
               "bg-navy px-6 py-3.5 text-sm font-semibold text-white",
@@ -437,30 +458,11 @@ function MobileDrawer({ open, onClose }: MobileDrawerProps) {
   );
 }
 
-function NavItemRenderer({ item }: { item: NavItem }) {
-  const isActive = useIsActive(item);
-  if (item.children) {
-    return (
-      <DropdownItem
-        item={item as NavItem & { children: NavChild[] }}
-        isActive={isActive}
-      />
-    );
-  }
-  return (
-    <NavLink
-      item={item as NavItem & { children?: never }}
-      isActive={isActive}
-    />
-  );
-}
-
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
-  // Add shadow on scroll
   useEffect(() => {
     function onScroll() {
       setScrolled(window.scrollY > 8);
@@ -477,17 +479,17 @@ export default function Header() {
           scrolled ? "shadow-md shadow-navy/8" : "border-b border-border-light",
         ].join(" ")}
       >
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2">
-          {/* ── Logo ── */}
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
+          {/* Logo */}
           <Link
             href="/"
-            className="text-xl font-semibold tracking-tight text-navy transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:rounded-sm"
+            className="text-xl font-semibold tracking-tight text-navy transition-opacity hover:opacity-80 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
             aria-label="Clarivance — go to homepage"
           >
             Clarivance
           </Link>
 
-          {/* ── Desktop nav ── */}
+          {/* Desktop nav */}
           <nav aria-label="Main navigation" className="hidden lg:block">
             <ul className="flex items-center gap-1" role="list">
               {NAV_ITEMS.map((item) => (
@@ -496,13 +498,12 @@ export default function Header() {
             </ul>
           </nav>
 
-          {/* ── Right controls ── */}
+          {/* Right controls */}
           <div className="flex items-center gap-3">
-            {/* Desktop CTA */}
             <Link
               href="/contact"
               className={[
-                "hidden lg:inline-flex items-center justify-center",
+                "hidden items-center justify-center lg:inline-flex",
                 "rounded-lg bg-navy px-5 py-2.5",
                 "text-sm font-semibold text-white",
                 "transition-colors duration-150 hover:bg-navy-hover",
@@ -512,7 +513,6 @@ export default function Header() {
               Book a free call
             </Link>
 
-            {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(true)}
               aria-label="Open navigation menu"
@@ -531,7 +531,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile drawer (rendered outside header so it can cover full viewport) */}
       <MobileDrawer open={mobileOpen} onClose={closeMobile} />
     </>
   );

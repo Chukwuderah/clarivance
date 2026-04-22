@@ -180,7 +180,7 @@ export default function HeroSection() {
         aria-label="Hero — Clarivance healthcare agency documentation"
         className="bg-off-white px-3 sm:px-6 py-20 sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-24"
       >
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-7xl">
           <div className="flex flex-col items-center gap-12 md:flex-row md:items-center md:gap-16">
             {/* ── Left: Text content ── */}
             <motion.div
@@ -192,7 +192,7 @@ export default function HeroSection() {
               {/* Eyebrow */}
               <motion.p
                 variants={fadeIn}
-                className="text-[10px] font-semibold uppercase tracking-widest text-teal"
+                className="text-xs font-semibold uppercase tracking-widest text-teal"
               >
                 Specialists in healthcare agency documentation
               </motion.p>
@@ -213,7 +213,7 @@ export default function HeroSection() {
                 className="max-w-xl text-base leading-relaxed text-slate sm:text-lg"
               >
                 We handle the documentation and licensing paperwork so you can
-                focus on building the agency you've worked for.
+                focus on building the agency you&apos;ve worked for.
               </motion.p>
 
               {/* CTAs */}

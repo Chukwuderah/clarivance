@@ -43,7 +43,7 @@ const cardVariants = {
 
 export default function HowItWorks() {
   return (
-    <section className="max-w-6xl px-3 py-10 sm:p-20 mx-auto overflow-hidden">
+    <section className="max-w-7xl px-6 py-16 sm:py-24 mx-auto overflow-hidden">
       {/* Header Animations */}
       <motion.div
         initial={{ opacity: 0, x: -15 }}
@@ -51,7 +51,7 @@ export default function HowItWorks() {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        <p className="text-sm font-bold uppercase tracking-widest text-teal-600 mb-4">
+        <p className="text-xs font-bold uppercase tracking-widest text-teal-600 mb-4">
           the process
         </p>
         <h2 className="text-4xl text-left text-navy font-bold max-w-3xl leading-tight">
