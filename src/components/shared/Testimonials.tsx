@@ -14,12 +14,12 @@ export interface Testimonial {
 
 export interface TestimonialsProps {
   subtitle?: string;
-  title: string;
+  title?: string;
   testimonials: Testimonial[];
 }
 
 export default function Testimonials({
-  subtitle = "WHAT CLIENTS SAY",
+  subtitle,
   title,
   testimonials,
 }: TestimonialsProps) {

@@ -509,7 +509,7 @@ export default function DocumentationServicePage() {
       <SectionCTA
         headline="Ready to get your documentation done right?"
         primary={{ label: "Get Started", href: "/contact" }}
-        secondary={{ label: "Contact us", href: "/contact" }}
+        secondary={{ label: "View All Services", href: "/services" }}
       />
     </section>
   );
