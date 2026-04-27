@@ -60,7 +60,7 @@ const services = [
   },
 ];
 
-const locations = [
+const locations: LocationData[] = [
   {
     country: "United States",
     states: [
@@ -143,35 +143,37 @@ const pricingPlans = [
   },
 ];
 
+interface LocationData {
+  country: string;
+  states?: string[];
+  note?: string;
+}
+
+const LocationBlock = ({ data }: { data: LocationData }) => {
+  return (
+    <div>
+      <h3 className="font-semibold text-xl sm:text-2xl mb-2">{data.country}</h3>
+
+      {data.states ? (
+        <div className="flex flex-wrap gap-2">
+          {data.states.map((state: string, i: number) => (
+            <span
+              key={i}
+              className="px-3 py-1 text-sm rounded-full bg-[#A3EEFF] text-teal"
+            >
+              {state}
+            </span>
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm italic text-charcoal">{data.note}</p>
+      )}
+    </div>
+  );
+};
+
 export default function ConsultingPage() {
-  const us = locations.find((l) => l.country === "United States");
-  const uk = locations.find((l) => l.country === "United Kingdom");
-  const intl = locations.find((l) => l.country === "International");
-
-  const LocationBlock = ({ data }: { data: any }) => {
-    return (
-      <div>
-        <h3 className="font-semibold text-xl sm:text-2xl mb-2">
-          {data.country}
-        </h3>
-
-        {data.states ? (
-          <div className="flex flex-wrap gap-2">
-            {data.states.map((state: string, i: number) => (
-              <span
-                key={i}
-                className="px-3 py-1 text-sm rounded-full bg-[#A3EEFF] text-teal"
-              >
-                {state}
-              </span>
-            ))}
-          </div>
-        ) : (
-          <p className="text-sm italic text-charcoal">{data.note}</p>
-        )}
-      </div>
-    );
-  };
+  const [us, uk, intl] = locations;
 
   return (
     <main className="bg-white text-gray-900">
@@ -289,14 +291,12 @@ export default function ConsultingPage() {
           </motion.h2>
           <div className="grid md:grid-cols-2 gap-12">
             {/* LEFT SIDE (US) */}
-            <div>
-              <LocationBlock data={us} />
-            </div>
+            <div>{us && <LocationBlock data={us} />}</div>
 
             {/* RIGHT SIDE (UK + INTERNATIONAL STACKED) */}
             <div className="flex flex-col gap-10">
-              <LocationBlock data={uk} />
-              <LocationBlock data={intl} />
+              {uk && <LocationBlock data={uk} />}
+              {intl && <LocationBlock data={intl} />}
             </div>
           </div>
         </div>

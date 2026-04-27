@@ -94,7 +94,7 @@ export default function NotFound() {
             variants={fadeUp}
             className="text-4xl font-semibold leading-tight tracking-tight text-navy sm:text-5xl"
           >
-            This page doesn't exist
+            This page doesn&apos;t exist
           </motion.h1>
 
           {/* Sub-copy */}
@@ -102,8 +102,8 @@ export default function NotFound() {
             variants={fadeUp}
             className="text-base leading-relaxed text-slate sm:text-lg"
           >
-            The page you're looking for may have been moved, renamed, or never
-            existed. Let's get you back on track.
+            The page you&apos;re looking for may have been moved, renamed, or never
+            existed. Let&apos;s get you back on track.
           </motion.p>
 
           {/* Primary actions */}
