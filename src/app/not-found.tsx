@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { FileSearch, ArrowLeft, Phone } from "lucide-react";
 
 const containerVariants = {
@@ -43,10 +45,21 @@ const QUICK_LINKS = [
   { label: "Assisted Living", href: "/industries/assisted-living" },
   { label: "DDA Services", href: "/industries/dda" },
   { label: "Our Work", href: "/work" },
-  { label: "About", href: "/about" },
+  { label: "About Us", href: "/about" },
 ];
 
 export default function NotFound() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname) {
+      console.error(
+        "404 Error: User attempted to access non-existent route:",
+        pathname,
+      );
+    }
+  }, [pathname]);
+
   return (
     <div
       id="main-content"
@@ -102,8 +115,12 @@ export default function NotFound() {
             variants={fadeUp}
             className="text-base leading-relaxed text-slate sm:text-lg"
           >
-            The page you&apos;re looking for may have been moved, renamed, or never
-            existed. Let&apos;s get you back on track.
+            The page you&apos;re looking for{" "}
+            <code className="bg-teal px-2 py-1 rounded text-sm text-gray-900 dark:text-white">
+              {pathname || "unknown"}
+            </code>{" "}
+            might have been moved, renamed, or never existed. Let&apos;s get you
+            back on track.
           </motion.p>
 
           {/* Primary actions */}
@@ -114,13 +131,13 @@ export default function NotFound() {
             <Link
               href="/"
               className={[
-                "inline-flex items-center justify-center gap-2 rounded-md",
+                "inline-flex items-center justify-center gap-2 rounded-md group",
                 "bg-navy px-7 py-3.5 text-sm font-semibold text-white",
                 "transition-all duration-150 hover:bg-navy-hover active:scale-[0.98]",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy focus-visible:ring-offset-2",
               ].join(" ")}
             >
-              <ArrowLeft size={15} strokeWidth={2.5} aria-hidden="true" />
+              <ArrowLeft size={15} strokeWidth={2.5} className="group-hover:-translate-x-1.5 transition-transform duration-300" aria-hidden="true" />
               Back to home
             </Link>
 
@@ -143,7 +160,7 @@ export default function NotFound() {
       {/* ── Quick links ── */}
       <section
         aria-labelledby="quick-links-heading"
-        className="border-t border-border-light bg-white px-6 py-12"
+        className="border-t border-border-light bg-[#E5EDF5] px-6 py-12"
       >
         <div className="mx-auto max-w-3xl">
           <motion.div
@@ -158,8 +175,14 @@ export default function NotFound() {
               Or jump to a page
             </p>
 
-            <nav aria-label="Quick links to site pages" className="max-w-3xl mx-auto">
-              <ul className="grid grid-cols-2 md:grid-cols-4 items-center justify-center gap-2.5" role="list">
+            <nav
+              aria-label="Quick links to site pages"
+              className="max-w-3xl mx-auto"
+            >
+              <ul
+                className="grid grid-cols-2 md:grid-cols-4 items-center justify-center gap-2.5"
+                role="list"
+              >
                 {QUICK_LINKS.map((link, i) => (
                   <motion.li
                     key={link.href}

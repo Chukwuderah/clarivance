@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ServicesPageClient from "@/app/services/ServicesPageClient";
+import ServicesPageClient from "./ServicesPageClient";
 
 export const metadata: Metadata = {
   title: "Services — Clarivance",

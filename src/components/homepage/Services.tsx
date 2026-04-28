@@ -24,7 +24,7 @@ const services = [
     description:
       "A professional, client-ready website built with modern tools - fast and credible.",
     icon: Globe,
-    href: "/services/website-development",
+    href: "/services/web-development",
   },
 ];
 
