@@ -14,18 +14,13 @@ import {
 } from "lucide-react";
 import SectionCTA from "@/components/shared/SectionCTA";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 interface Industry {
   icon: React.ReactNode;
   title: string;
   description: string;
   href: string;
-  /** true = full detail page exists; false = contact stub */
   hasPage: boolean;
 }
-
-// ─── Data ─────────────────────────────────────────────────────────────────────
 
 const INDUSTRIES: Industry[] = [
   {
@@ -78,8 +73,6 @@ const INDUSTRIES: Industry[] = [
   },
 ];
 
-// ─── Animation variants ───────────────────────────────────────────────────────
-
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
   visible: {
@@ -106,8 +99,6 @@ const gridStagger = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.08 } },
 };
-
-// ─── Industry card ────────────────────────────────────────────────────────────
 
 function IndustryCard({ industry }: { industry: Industry }) {
   return (
@@ -172,13 +163,11 @@ function IndustryCard({ industry }: { industry: Industry }) {
   );
 }
 
-// ─── Hero ─────────────────────────────────────────────────────────────────────
-
 function PageHero() {
   return (
     <section
       aria-labelledby="industries-hero-heading"
-      className="bg-off-white px-6 pb-20 pt-14 sm:pb-24 sm:pt-16"
+      className="bg-off-white px-6 py-16 sm:py-24"
     >
       <div className="mx-auto max-w-6xl">
         <motion.div

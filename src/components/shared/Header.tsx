@@ -61,10 +61,12 @@ const NAV_ITEMS: NavItem[] = [
 function useIsActive(item: NavItem): boolean {
   const pathname = usePathname();
   if (pathname === item.href) return true;
-  if (item.children) {
-    return item.children.some((child) => pathname.startsWith(child.href));
+
+  if (item.href !== "/" && pathname.startsWith(item.href)) {
+    return true;
   }
-  return pathname.startsWith(item.href) && item.href !== "/";
+
+  return false;
 }
 
 interface DropdownChildProps {
@@ -274,9 +276,6 @@ function MobileDrawer({ open, onClose }: MobileDrawerProps) {
     return () => document.removeEventListener("keydown", handleKey);
   }, [open, onClose]);
 
-  // FIX: removed useEffect(() => { onClose() }, [pathname]) — same rule.
-  // Drawer closes on navigation via onClick handlers on every Link below.
-
   return (
     <>
       {/* Backdrop */}
@@ -328,7 +327,7 @@ function MobileDrawer({ open, onClose }: MobileDrawerProps) {
             {NAV_ITEMS.map((item) => {
               const isParentActive =
                 pathname === item.href ||
-                item.children?.some((c) => pathname.startsWith(c.href));
+                (item.href !== "/" && pathname.startsWith(item.href));
 
               if (item.children) {
                 const isExpanded = expandedItem === item.label;

@@ -267,6 +267,7 @@ export default function HeroSection() {
         subtitle="WHAT CLIENTS SAY"
         title="Results agencies count on"
         testimonials={testimonialsData}
+        className="bg-white py-16"
       />
       <HowItWorks />
       <SectionCTA

@@ -343,7 +343,10 @@ export default function ConsultingPage() {
         </div>
       </section>
 
-      <Testimonials testimonials={testimonialsData} />
+      <Testimonials
+        testimonials={testimonialsData}
+        className="bg-white py-16"
+      />
 
       {/* PRICING */}
       <section className="py-20 px-6 bg-off-white">

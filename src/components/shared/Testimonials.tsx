@@ -16,12 +16,14 @@ export interface TestimonialsProps {
   subtitle?: string;
   title?: string;
   testimonials: Testimonial[];
+  className?: string;
 }
 
 export default function Testimonials({
   subtitle,
   title,
   testimonials,
+  className,
 }: TestimonialsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -62,7 +64,7 @@ export default function Testimonials({
   };
 
   return (
-    <section className="w-full py-16 px-4 md:px-8 bg-white overflow-hidden">
+    <section className={`"w-full px-4 md:px-8 overflow-hidden" ${className}`}>
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12">
@@ -87,13 +89,13 @@ export default function Testimonials({
           <div
             ref={scrollContainerRef}
             onScroll={handleScroll}
-            className="flex gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-8 md:pb-0 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
+            className="flex gap-3 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-8 md:pb-0 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
           >
             {testimonials.map((testimonial) => (
               <motion.div
                 key={testimonial.id}
                 variants={itemVariants}
-                className="shrink-0 w-[90%] sm:w-100 md:w-full md:flex-1 snap-center bg-white rounded-2xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between h-auto min-h-70"
+                className="shrink-0 w-[95%] sm:w-100 md:w-full md:flex-1 snap-center bg-white rounded-2xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between h-auto min-h-70"
               >
                 <div>
                   {/* Star Rating */}
@@ -121,7 +123,7 @@ export default function Testimonials({
                   <p className="font-bold text-navy flex items-center gap-2">
                     <span className="font-bold">—</span> {testimonial.name}
                   </p>
-                  <p className="text-sm text-slate-500 mt-1">
+                  <p className="text-sm text-left text-slate-500 mt-1">
                     {testimonial.agencyName}
                   </p>
                 </div>
