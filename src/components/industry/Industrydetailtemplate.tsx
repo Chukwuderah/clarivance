@@ -129,7 +129,7 @@ function Hero({ data }: { data: IndustryPageData }) {
         >
           <motion.p
             variants={fadeIn}
-            className="mb-5 text-xs font-semibold uppercase tracking-widest text-teal"
+            className="mb-5 text-xs font-semibold uppercase tracking-widest text-teal-600"
           >
             {data.eyebrow}
           </motion.p>

@@ -18,8 +18,14 @@ interface Industry {
   icon: React.ReactNode;
   title: string;
   description: string;
-  href: string;
+  slug: string;
   hasPage: boolean;
+}
+
+function resolveHref(industry: Industry): string {
+  return industry.hasPage
+    ? `/industries/${industry.slug}`
+    : `/contact?sector=${industry.slug}`;
 }
 
 const INDUSTRIES: Industry[] = [
@@ -28,7 +34,7 @@ const INDUSTRIES: Industry[] = [
     title: "Home Health",
     description:
       "Precision documentation for skilled nursing and therapy services delivered in the patient's residence.",
-    href: "/industries/home-health",
+    slug: "home-health",
     hasPage: true,
   },
   {
@@ -36,7 +42,7 @@ const INDUSTRIES: Industry[] = [
     title: "Assisted Living",
     description:
       "Navigating state-specific regulations while maintaining resident-centered care narratives.",
-    href: "/industries/assisted-living",
+    slug: "assisted-living",
     hasPage: true,
   },
   {
@@ -44,7 +50,7 @@ const INDUSTRIES: Industry[] = [
     title: "DDA/IDD Services",
     description:
       "Ensuring compliance for developmental disability administration and support services.",
-    href: "/industries/dda",
+    slug: "dda",
     hasPage: true,
   },
   {
@@ -52,24 +58,24 @@ const INDUSTRIES: Industry[] = [
     title: "Adult Day Care",
     description:
       "Structuring daily activity and therapeutic intervention logs for community-based care centers.",
-    href: "/contact?sector=adult-day-care",
-    hasPage: false,
+    slug: "adult-day-care",
+    hasPage: true,
   },
   {
     icon: <Heart size={22} strokeWidth={1.75} />,
     title: "Hospice",
     description:
       "Sensitive, compliant documentation covering end-of-life care, pain management, and family support.",
-    href: "/contact?sector=hospice",
-    hasPage: false,
+    slug: "hospice",
+    hasPage: true,
   },
   {
     icon: <Building2 size={22} strokeWidth={1.75} />,
     title: "Group Homes",
     description:
       "Standardizing incident reporting and daily living logs across multiple residential facilities.",
-    href: "/contact?sector=group-homes",
-    hasPage: false,
+    slug: "group-home",
+    hasPage: true,
   },
 ];
 
@@ -101,10 +107,12 @@ const gridStagger = {
 };
 
 function IndustryCard({ industry }: { industry: Industry }) {
+  const href = resolveHref(industry);
+  const cardId = `industry-${industry.slug}`;
   return (
     <motion.article
       variants={fadeUp}
-      aria-labelledby={`industry-${industry.title.toLowerCase().replace(/[\s/]+/g, "-")}`}
+      aria-labelledby={cardId}
       className={[
         "group flex flex-col gap-5 rounded-2xl border border-border bg-white p-6",
         "transition-all duration-200",
@@ -126,7 +134,7 @@ function IndustryCard({ industry }: { industry: Industry }) {
       {/* Text */}
       <div className="flex flex-1 flex-col gap-2">
         <h2
-          id={`industry-${industry.title.toLowerCase().replace(/[\s/]+/g, "-")}`}
+          id={cardId}
           className="text-lg font-semibold text-navy"
         >
           {industry.title}
@@ -138,7 +146,7 @@ function IndustryCard({ industry }: { industry: Industry }) {
 
       {/* CTA link */}
       <Link
-        href={industry.href}
+        href={href}
         className={[
           "group/link inline-flex items-center gap-1.5",
           "text-sm font-semibold text-teal",
@@ -227,7 +235,7 @@ function IndustriesGrid() {
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {INDUSTRIES.map((industry) => (
-            <IndustryCard key={industry.title} industry={industry} />
+            <IndustryCard key={industry.slug} industry={industry} />
           ))}
         </motion.div>
       </div>
