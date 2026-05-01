@@ -18,20 +18,20 @@ const COMPANY = [
   { label: "About", href: "/about" },
   { label: "Our Work", href: "/work" },
   { label: "Resources", href: "/resources" },
-  { label: "Contact", href: "/contact" },
 ];
 
 const CURRENT_YEAR = new Date().getFullYear();
 
 interface FooterColumnProps {
   heading: string;
+  headingHref: string;
   links: { label: string; href: string }[];
 }
 
-function FooterColumn({ heading, links }: FooterColumnProps) {
+function FooterColumn({ heading, headingHref, links }: FooterColumnProps) {
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="text-sm font-semibold text-white">{heading}</h3>
+      <Link href={headingHref} className="text-sm font-semibold text-white">{heading}</Link>
       <ul className="flex flex-col gap-3" role="list">
         {links.map((link) => (
           <li key={link.href}>
@@ -79,10 +79,10 @@ export default function Footer() {
           </div>
 
           {/* Col 2 — Services */}
-          <FooterColumn heading="Services" links={SERVICES} />
+          <FooterColumn heading={"Services"} headingHref="/services" links={SERVICES} />
 
           {/* Col 3 — Industries */}
-          <FooterColumn heading="Industries" links={INDUSTRIES} />
+          <FooterColumn heading="Industries" headingHref="/industries" links={INDUSTRIES} />
 
           {/* Col 4 — Company + CTA */}
           <div className="flex flex-col gap-4">
