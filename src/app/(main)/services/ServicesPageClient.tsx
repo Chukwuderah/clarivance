@@ -362,7 +362,7 @@ export default function ServicesPageClient() {
         headline="Not sure where to start?"
         subCopy="Book a free 20-minute call and we'll tell you exactly what your agency needs."
         primary={{ label: "Book a free call", href: "/contact" }}
-        secondary={{ label: "Contact us", href: "/contact" }}
+        secondary={{ label: "See our work", href: "/work" }}
       />
     </main>
   );

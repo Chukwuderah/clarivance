@@ -315,10 +315,10 @@ function PageHero() {
         </motion.h1>
         <motion.p
           variants={fadeIn}
-          className="text-base leading-relaxed text-charcoal text-center sm:text-lg max-w-xl"
+          className="text-base leading-relaxed text-charcoal sm:text-lg max-w-xl mx-auto"
         >
-          We don't publish client names without permission — but here's what
-          we've helped agencies achieve.
+          We don&apos;t publish client names without permission, but here&apos;s what
+          we&apos;ve helped agencies achieve.
         </motion.p>
       </motion.div>
     </section>
@@ -375,7 +375,7 @@ function CaseStudiesSection() {
               exit={{ opacity: 0 }}
               className="py-16 text-center text-sm text-slate"
             >
-              No case studies in this category yet — check back soon.
+              No case studies in this category yet, check back soon.
             </motion.p>
           )}
         </AnimatePresence>

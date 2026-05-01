@@ -173,7 +173,7 @@ function DocumentIllustration() {
   );
 }
 
-export default function HeroSection() {
+export default function Home() {
   return (
     <>
       <section
@@ -274,7 +274,7 @@ export default function HeroSection() {
         headline="Ready to get your agency off the ground?"
         subCopy="Book a free 20-minute call. No commitment, no pressure — just clarity on exactly what you need."
         primary={{ label: "Book a free call", href: "/contact" }}
-        secondary={null}
+        secondary={{ label: "See our work", href: "/work" }}
       />
     </>
   );
